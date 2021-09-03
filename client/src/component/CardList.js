@@ -14,6 +14,7 @@ const CardList = (props) => {
 
     useEffect(() => {
         setRegions(props.chiLocation)
+        doctorFilter()
         console.log(regions)
     },[props])
 
@@ -27,7 +28,8 @@ const CardList = (props) => {
     }
     
     function doctorFilter(){
-
+        const result = doctors.filter(doctor =>  regions.includes(doctor.chiLocation))
+        setDoctors(result)
     }
     return(
         <Grid>
