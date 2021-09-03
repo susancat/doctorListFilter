@@ -1,66 +1,128 @@
-import React,{ useState, useEffect } from 'react';
-import {Dropdown} from 'react-bootstrap';
+import React,{ useState } from 'react';
+import { newT, kowloon, hkIsland, islands, normal, special, chiMed, others, priceRanges } from '../data';
+import { Dropdown, Menu, Button, Icon } from 'semantic-ui-react';
+import CardList from './CardList';
+
 const Filters = () => {
-    const [region, setRegion] = useState([]);
-    const [field, setField] = useState([]);
-    const [price, setPrice] = useState([]);
+    const [regions, setRegions] = useState([]);
+    const [fields, setFields] = useState([]);
+    const [prices, setPrices] = useState([]);
+    
+    const renderLabel = (label) => ({
+        color:'pink',
+        content: `${label.text}`
+    })
 
-    useEffect(() => {
+    const handleChange = (e, {value}) => {
+        setRegions(value);
+    }
 
-    },[region,field,price]);
+    const handleChange2 = (e, {value}) => {
+        setFields(value);
+    }
+    const handleChange3 = (e, {value}) => {
+        setPrices(value);
+    }
+    const deleteValue = (e, {value}) => {
+        console.log("clicked"+value)
+        const index = regions.indexOf(value);
+        regions.splice(index,1);
+        console.log(regions + index)
+        setRegions([...regions])
+        // use spreading to inform React it's a new array to trigger a re-render
+    }
 
-    const newT = ["粉嶺","葵涌","葵芳","马鞍山","沙田","大圍","上水","大埔","太和","天水圍","將軍澳","青衣","荃灣","屯門"];
-    const kowloon = ["長沙灣","彩虹","鑽石山","紅磡","佐敦","九龍灣", "九龍城","觀塘","荔枝角","藍田","樂富","美孚","旺角","牛池灣","牛頭角","奧海城","太子","新蒲崗","深水埗","石硤尾","大角咀","土瓜灣","尖沙咀","黃大仙","油麻地","油塘"];
-    const hkIsland = [];
-    const islands = [];
+
+    const deleteValue2 = (e, {value}) => {
+        console.log("clicked"+value)
+        const index = fields.indexOf(value);
+        fields.splice(index,1);
+        console.log(fields + index)
+        setFields([...fields])
+    }
+
+    const deleteValue3 = (e, {value}) => {
+        console.log("clicked"+value)
+        const index = prices.indexOf(value);
+        prices.splice(index,1);
+        console.log(prices + index)
+        setPrices([...prices])
+    }
+
     return(
-        <div className="row mt-5">
-            <div className="col-md-4">
-
-            <Dropdown>
-                <Dropdown.Toggle variant="light" id="dropdown-basic">
-                按地區搜索
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown>
-                        <Dropdown.Toggle variant="light" id="dropdown-basic">
-                        新界
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            { newT.map(region => {
-                                return(<Dropdown.Item href="#/action-2">{region}</Dropdown.Item>)
-                            })}
-                        </Dropdown.Menu>
-                    </Dropdown>
-                    <Dropdown>
-                        <Dropdown.Toggle variant="light" id="dropdown-basic">
-                        九龍
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            { kowloon.map(region => {
-                                    return(<Dropdown.Item href="#/action-2">{region}</Dropdown.Item>)
-                            })}
-                        </Dropdown.Menu>
-                    </Dropdown>
-                    <Dropdown>
-                        <Dropdown.Toggle variant="light" id="dropdown-basic">
-                        香港
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            { hkIsland.map(region => {
-                                    return(<Dropdown.Item href="#/action-2">{region}</Dropdown.Item>)
-                            })}
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Dropdown.Menu>
-            </Dropdown>
-            </div>
-            <div className="col-md-4">
-
-                
-            </div>
+        <div>
+            <Menu>
+                <Dropdown text='按區域搜索' className='link item' fluid>
+                    <Dropdown.Menu>
+                        <Dropdown.Item>
+                            <Dropdown text='新界' className='link item' fluid multiple selection options={newT} onChange={handleChange.bind(this)} value={regions} renderLabel={renderLabel} />
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            <Dropdown text='九龍' className='link item' fluid multiple selection options={kowloon} onChange={handleChange.bind(this)} value={regions} renderLabel={renderLabel} />
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            <Dropdown text='香港' className='link item' fluid multiple selection options={hkIsland} onChange={handleChange.bind(this)} value={regions} renderLabel={renderLabel} />
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            <Dropdown text='離島' className='link item' fluid multiple selection options={islands} onChange={handleChange.bind(this)} value={regions} renderLabel={renderLabel} />
+                        </Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+                <Dropdown text='醫療範疇' className='link item' fluid>
+                    <Dropdown.Menu>
+                        <Dropdown.Item>
+                            <Dropdown text='普通科門診' className='link item' fluid multiple selection options={normal} onChange={handleChange2.bind(this)} value={fields} renderLabel={renderLabel} />
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            <Dropdown text='專科門診' className='link item' fluid multiple selection options={special} onChange={handleChange2.bind(this)} value={fields} renderLabel={renderLabel} />
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            <Dropdown text='中醫' className='link item' fluid multiple selection options={chiMed} onChange={handleChange2.bind(this)} value={fields} renderLabel={renderLabel} />
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            <Dropdown text='其它' className='link item' fluid multiple selection options={others} onChange={handleChange2.bind(this)} value={fields} renderLabel={renderLabel} />
+                        </Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+                <Dropdown 
+                text='按價格搜索' 
+                className='link item' 
+                fluid 
+                multiple 
+                selection
+                onChange={handleChange3.bind(this)}
+                value={prices}
+                options={priceRanges}
+                />
+            </Menu>
+            {
+                regions.map(region => {
+                    console.log(region)
+                    return(
+                    <Button basic color='pink' style={{borderRadius:'10px'}} onClick={deleteValue.bind(this)} value={region}><Icon name="close"></Icon>{region}</Button>
+                    )
+                })
+            }
+            {
+                fields.map(field => {
+                    console.log(field)
+                    return(
+                    <Button basic color='pink' style={{borderRadius:'10px'}} onClick={deleteValue2.bind(this)} value={field}><Icon name="close"></Icon>{field}</Button>
+                    )
+                })
+            }
+                        {
+                prices.map(price => {
+                    console.log(price)
+                    return(
+                    <Button basic color='pink' style={{borderRadius:'10px'}} onClick={deleteValue3.bind(this)} value={price}><Icon name="close"></Icon>{price}</Button>
+                    )
+                })
+            }
+            <CardList chiLocation={regions} />
         </div>
-    )
+      )
 }
+
 
 export default Filters;

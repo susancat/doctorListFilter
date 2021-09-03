@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import 'bootstrap5/src/css/bootstrap.min.css';
-import 'bootstrap5/src/js/bootstrap.bundle.min.js';
+import 'semantic-ui-css/semantic.min.css';
 
 ReactDOM.render(
   <React.StrictMode>
