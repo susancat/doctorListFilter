@@ -1,22 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Card, Icon } from 'semantic-ui-react';
-
+import { Card } from 'semantic-ui-react';
+import SingleCard from './SingleCard';
 import axios from 'axios';
 
 const CardList = (props) => {
     // const regions = props.chiLocation;
     // console.log(regions);
     const [doctors, setDoctors] = useState([]);
-    const [regions,setRegions] = useState(props.chiLocation)
+    const [filteredDrs, setFilteredDrs] = useState([]);
+    const [regions,setRegions] = useState(props.chiLocation);
+    const [ifEmpty, setIfEmpty] = useState(false);
+
+    //fetch all doctors for once
     useEffect(() => {
         getDoctors()
     },[])
 
     useEffect(() => {
         setRegions(props.chiLocation)
-        doctorFilter()
-        console.log(regions)
-    },[props])
+    },[props.chiLocation])
+
+    useEffect(() => {
+        const result = regions.map(region => {
+            return doctors.filter(doctor => 
+                doctor.chiLocation.includes(region)
+            )
+        })    
+        setFilteredDrs(result)
+    },[regions])
+
+    useEffect(() => {
+        const isEmpty = filteredDrs.map(doctors => doctors.length !== 0);
+        isEmpty.includes(true) ?
+        setIfEmpty(false) : setIfEmpty(true);
+    }, [filteredDrs])
 
     function getDoctors() {
         axios.get(`/api/doctors`)
@@ -26,29 +43,24 @@ const CardList = (props) => {
             console.log(err);
         })
     }
-    
-    function doctorFilter(){
-        const result = doctors.filter(doctor =>  regions.includes(doctor.chiLocation))
-        setDoctors(result)
-    }
-    return(
-        <Grid>
-            <Grid.Column column={2} >
-                { doctors.map(doctor => {
-                    return(
-                        <Card>
-                            <Card.Content>
-                                <Card.Header>{ doctor.chiName }</Card.Header>
-                                <Card.Meta><Icon name="map marker"></Icon>{ doctor.chiAddress1 }, { doctor.chiAddress2 }</Card.Meta>
-                                <Card.Description>
-                                    診金 { doctor.price }
-                                </Card.Description>
-                            </Card.Content>
-                        </Card>
-                    )
-                })}
-            </Grid.Column>
-        </Grid>
+
+    return( 
+        <Card.Group itemsPerRow={2}>
+            {ifEmpty ?
+                <div className="mt-5">
+                    <h4 className="mt-5 ml-3">沒有符合條件的醫生</h4>
+                </div> :
+
+            
+                filteredDrs.map(doctors => {
+                    return doctors.map(doctor => {
+                        return(
+                            <SingleCard key={doctor.doctorId} doctor={doctor} />
+                        )  
+                   })        
+                })
+            }
+        </Card.Group>
     )
 }
 

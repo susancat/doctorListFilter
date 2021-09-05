@@ -1,6 +1,6 @@
 import React,{ useState } from 'react';
 import { newT, kowloon, hkIsland, islands, normal, special, chiMed, others, priceRanges } from '../data';
-import { Dropdown, Menu, Button, Icon } from 'semantic-ui-react';
+import { Grid, Dropdown, Menu, Button } from 'semantic-ui-react';
 import CardList from './CardList';
 
 const Filters = () => {
@@ -50,56 +50,70 @@ const Filters = () => {
     }
 
     return(
-        <div>
-            <Menu>
-                <Dropdown text='按區域搜索' className='link item' fluid>
-                    <Dropdown.Menu>
-                        <Dropdown.Item>
-                            <Dropdown text='新界' className='link item' fluid multiple selection options={newT} onChange={handleChange.bind(this)} value={regions} renderLabel={renderLabel} />
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            <Dropdown text='九龍' className='link item' fluid multiple selection options={kowloon} onChange={handleChange.bind(this)} value={regions} renderLabel={renderLabel} />
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            <Dropdown text='香港' className='link item' fluid multiple selection options={hkIsland} onChange={handleChange.bind(this)} value={regions} renderLabel={renderLabel} />
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            <Dropdown text='離島' className='link item' fluid multiple selection options={islands} onChange={handleChange.bind(this)} value={regions} renderLabel={renderLabel} />
-                        </Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-                <Dropdown text='醫療範疇' className='link item' fluid>
-                    <Dropdown.Menu>
-                        <Dropdown.Item>
-                            <Dropdown text='普通科門診' className='link item' fluid multiple selection options={normal} onChange={handleChange2.bind(this)} value={fields} renderLabel={renderLabel} />
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            <Dropdown text='專科門診' className='link item' fluid multiple selection options={special} onChange={handleChange2.bind(this)} value={fields} renderLabel={renderLabel} />
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            <Dropdown text='中醫' className='link item' fluid multiple selection options={chiMed} onChange={handleChange2.bind(this)} value={fields} renderLabel={renderLabel} />
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            <Dropdown text='其它' className='link item' fluid multiple selection options={others} onChange={handleChange2.bind(this)} value={fields} renderLabel={renderLabel} />
-                        </Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-                <Dropdown 
-                text='按價格搜索' 
-                className='link item' 
-                fluid 
-                multiple 
-                selection
-                onChange={handleChange3.bind(this)}
-                value={prices}
-                options={priceRanges}
-                />
-            </Menu>
+        <Grid style={{marginTop:'2rem'}}>
+        <Grid.Row columns={3}>
+            <Grid.Column>
+                <Menu>
+                    <Dropdown text='按區域搜索' className='link item' fluid>
+                        <Dropdown.Menu>
+                            <Dropdown.Item>
+                                <Dropdown text='新界' className='link item' fluid multiple selection options={newT} onChange={handleChange.bind(this)} value={regions} renderLabel={renderLabel} />
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                                <Dropdown text='九龍' className='link item' fluid multiple selection options={kowloon} onChange={handleChange.bind(this)} value={regions} renderLabel={renderLabel} />
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                                <Dropdown text='香港' className='link item' fluid multiple selection options={hkIsland} onChange={handleChange.bind(this)} value={regions} renderLabel={renderLabel} />
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                                <Dropdown text='離島' className='link item' fluid multiple selection options={islands} onChange={handleChange.bind(this)} value={regions} renderLabel={renderLabel} />
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Menu>
+            </Grid.Column>
+                
+            <Grid.Column>
+                <Menu>
+                    <Dropdown text='醫療範疇' className='link item' fluid>
+                        <Dropdown.Menu>
+                            <Dropdown.Item>
+                                <Dropdown text='普通科門診' className='link item' fluid multiple selection options={normal} onChange={handleChange2.bind(this)} value={fields} renderLabel={renderLabel} />
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                                <Dropdown text='專科門診' className='link item' fluid multiple selection options={special} onChange={handleChange2.bind(this)} value={fields} renderLabel={renderLabel} />
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                                <Dropdown text='中醫' className='link item' fluid multiple selection options={chiMed} onChange={handleChange2.bind(this)} value={fields} renderLabel={renderLabel} />
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                                <Dropdown text='其它' className='link item' fluid multiple selection options={others} onChange={handleChange2.bind(this)} value={fields} renderLabel={renderLabel} />
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Menu>
+            </Grid.Column>
+            <Grid.Column>
+                <Menu>
+                    <Dropdown 
+                    text='按價格搜索' 
+                    className='link item' 
+                    fluid 
+                    multiple 
+                    selection
+                    onChange={handleChange3.bind(this)}
+                    renderLabel={renderLabel}
+                    value={prices}
+                    options={priceRanges}
+                    />
+                </Menu>
+            </Grid.Column>
+            <div className="ml-3 mt-3 mb-3">
             {
                 regions.map(region => {
-                    console.log(region)
+                    // console.log(region)
                     return(
-                    <Button basic color='pink' style={{borderRadius:'10px'}} onClick={deleteValue.bind(this)} value={region}><Icon name="close"></Icon>{region}</Button>
+                    <Button basic color='pink' style={{borderRadius:'15px'}} onClick={deleteValue.bind(this)} value={region}>X {region}</Button>
                     )
                 })
             }
@@ -107,20 +121,22 @@ const Filters = () => {
                 fields.map(field => {
                     console.log(field)
                     return(
-                    <Button basic color='pink' style={{borderRadius:'10px'}} onClick={deleteValue2.bind(this)} value={field}><Icon name="close"></Icon>{field}</Button>
+                    <Button basic color='pink' style={{borderRadius:'15px', marginBottom:'1rem'}} onClick={deleteValue2.bind(this)} value={field}>X {field}</Button>
                     )
                 })
             }
-                        {
+            {
                 prices.map(price => {
                     console.log(price)
                     return(
-                    <Button basic color='pink' style={{borderRadius:'10px'}} onClick={deleteValue3.bind(this)} value={price}><Icon name="close"></Icon>{price}</Button>
+                    <Button basic color='pink' style={{borderRadius:'15px'}} onClick={deleteValue3.bind(this)} value={price}>X {price}</Button>
                     )
                 })
             }
+            </div>
             <CardList chiLocation={regions} />
-        </div>
+        </Grid.Row>
+        </Grid>
       )
 }
 
