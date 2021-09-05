@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "12.18.3",
+    "npm": "7.20.2"
+  },
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js --ignore './client/'",
