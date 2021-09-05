@@ -1,6 +1,5 @@
 const express = require('express'),
       app = express(),
-      path = require('path');
       mongoose = require('mongoose'),
       keys = require('./config/keys'),
       cors = require('cors');
@@ -28,9 +27,15 @@ mongoose.connect(DATABASEURL, {
 
 app.use('/api/doctors',doctorRoutes);
 
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
-});
+if (process.env.NODE_ENV === 'production') {
+    //let express serve up priduction assets like main.css/js
+    app.use(express.static('client/build'));
+    //if express doesnot recognize the route, serve up index.html
+    const path = require('path');
+    app.get('*', (req,res) => {
+        res.sendFile(path.resolve(__dirname,'client','build', 'index.html'));
+    });
+}
 
 app.listen(process.env.PORT || 5000, () => {
     console.log("Bowtie Go has started");
