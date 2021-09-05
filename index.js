@@ -27,6 +27,10 @@ mongoose.connect(DATABASEURL, {
 
 app.use('/api/doctors',doctorRoutes);
 
+app.get('/', (req, res) => {
+    res.redirect('http://localhost:3000')
+})
+
 app.listen(process.env.PORT || 5000, () => {
     console.log("Bowtie Go has started");
 });
