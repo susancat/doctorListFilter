@@ -45,10 +45,10 @@ const CardList = (props) => {
     }
 
     return( 
-        <Card.Group itemsPerRow={2}>
-            {ifEmpty ?
+        <Card.Group itemsPerRow={2} style={{marginLeft:'.4rem',marginRight:'.3rem'}}>
+            {ifEmpty && regions.length !== 0 ?
                 <div className="mt-5">
-                    <h4 className="mt-5 ml-3">沒有符合條件的醫生</h4>
+                    <h4 className="mt-5">沒有符合條件的醫生</h4>
                 </div> :
 
             

@@ -24,28 +24,22 @@ const Filters = () => {
         setPrices(value);
     }
     const deleteValue = (e, {value}) => {
-        console.log("clicked"+value)
         const index = regions.indexOf(value);
         regions.splice(index,1);
-        console.log(regions + index)
         setRegions([...regions])
         // use spreading to inform React it's a new array to trigger a re-render
     }
 
 
     const deleteValue2 = (e, {value}) => {
-        console.log("clicked"+value)
         const index = fields.indexOf(value);
         fields.splice(index,1);
-        console.log(fields + index)
         setFields([...fields])
     }
 
     const deleteValue3 = (e, {value}) => {
-        console.log("clicked"+value)
         const index = prices.indexOf(value);
         prices.splice(index,1);
-        console.log(prices + index)
         setPrices([...prices])
     }
 
